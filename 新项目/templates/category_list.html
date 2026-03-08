@@ -1,0 +1,32 @@
+{% extends "parent_template.html" %}
+{% block title %}分类列表——我的博客{% endblock %}
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>分类名称</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.category_name }}</td>
+            <td>
+                <a href="{{ url_for('category_edit', id=category.id) }}">编辑</a>
+                <form action="{{ url_for('category_delete', id=category.id) }}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('确定删除吗?')">删除</button>
+                </form>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">暂无数据</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

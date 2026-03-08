@@ -1,0 +1,27 @@
+{% extends "parent_template.html" %}
+{% block title %}编辑文章{% endblock %}
+{% block content %}
+<h1>编辑文章</h1>
+<form method="post">
+    <p>
+        <label for="title">标题：</label>
+        <input type="text" id="title" name="title" value="{{ blog.title }}" required>
+    </p>
+    <p>
+        <label for="category_id">分类：</label>
+        <select id="category_id" name="category_id" required>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}" {% if cat.id == blog.category_id %}selected{% endif %}>{{ cat.category_name }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        <label for="content">内容：</label><br>
+        <textarea id="content" name="content" rows="15" cols="80" required>{{ blog.content }}</textarea>
+    </p>
+    <p>
+        <button type="submit">更新</button>
+        <a href="{{ url_for('blog_detail', id=blog.id) }}">取消</a>
+    </p>
+</form>
+{% endblock %}

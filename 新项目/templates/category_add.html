@@ -1,0 +1,15 @@
+{% extends "parent_template.html" %}
+{% block title %}分类添加{% endblock %}
+{% block content %}
+<h1>添加分类</h1>
+<form method="post" action="{{url_for('category_add')}}">
+    <p>
+        <label for="category_name">类别名称:</label>
+        <input type="text" id="category_name" name="category_name" required>
+    </p>
+    <p>
+        <button  type="submit">提交</button>
+        <a href="{{url_for('category_list')}}">返回列表</a>
+    </p>
+</form>
+{% endblock %}

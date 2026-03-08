@@ -1,0 +1,28 @@
+{% extends "parent_template.html" %}
+{% block title %}写新文章{% endblock %}
+{% block content %}
+<h1>写新文章</h1>
+<form method="post">
+    <p>
+        <label for="title">标题：</label>
+        <input type="text" id="title" name="title" required>
+    </p>
+    <p>
+        <label for="category_id">分类：</label>
+        <select id="category_id" name="category_id" required>
+            <option value="">请选择分类</option>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}">{{ cat.category_name }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        <label for="content">内容：</label><br>
+        <textarea id="content" name="content" rows="15" cols="80" required></textarea>
+    </p>
+    <p>
+        <button type="submit">发布</button>
+        <a href="{{ url_for('blog_list') }}">取消</a>
+    </p>
+</form>
+{% endblock %}

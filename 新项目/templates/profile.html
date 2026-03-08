@@ -1,0 +1,11 @@
+{% extends 'parent_template.html' %}
+{% block title %}个人资料{% endblock %}
+{% block content %}
+<h1>个人资料</h1>
+<p>用户名:{{user.username}}</p>
+<p>邮箱:{{user.email}}</p>
+<p>个人简介:{{user.bio or '暂无'}}</p>
+<p>注册时间:{{user.created_at.strftime('%y-%m-%d %h:%m')}}</p>
+<a href="{{url_for('edit_profile')}}">编辑资料</a>
+<a href="{{url_for('change_password')}}">修改密码</a>
+{% endblock %}

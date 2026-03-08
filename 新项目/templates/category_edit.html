@@ -1,0 +1,15 @@
+{% extends "parent_template.html" %}
+{% block title %}类别编辑{% endblock %}
+{% block content %}
+<h1>类别编辑</h1>
+<form method="post">
+    <p>
+        <label for="category_edit">类别编辑</label>
+        <input type="text" id="category_edit" name="category_name" value="{{category.category_name}}" required>
+    </p>
+    <p>
+        <button type="submit">更新</button>
+        <a href="{{url_for('category_list')}}">返回列表</a>
+    </p>
+</form>
+{% endblock %}

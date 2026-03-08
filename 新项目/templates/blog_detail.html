@@ -1,0 +1,18 @@
+{% extends "parent_template.html" %}
+{% block title %}博客详情{% endblock %}
+{% block content %}
+<h1>{{blog.title}}</h1>
+<p>
+    作者:{{blog.author.username if blog.author else '未知'}} | 分类:{{blog.category.category_name if blog.category else '未知'}}
+</p>
+<p>
+    发布时间:{{blog.create_time.strftime('%y-%m-%d %h:%m')}} | 最后更新:{{blog.update_time.strftime('%y-%m-%d %h:%m')}}
+</p>
+<hr>
+<div class="content">
+    {{blog.content_html | self }}
+</div>
+<hr>
+<a href="{{url_for('blog_list')}}">返回列表</a>
+<a href="{{url_for('blog_edit' , id=blog.id)}}">编辑</a>
+{% endblock %}

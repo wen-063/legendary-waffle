@@ -1,0 +1,37 @@
+{% extends "parent_template.html" %}
+{% block title %}文章列表{% endblock %}
+{% block content %}
+<h1>文章列表</h1>
+<a href="{{url_for('blog_add')}}">添加新文章</a>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>标题</th>
+        <th>作者</th>
+        <th>分类</th>
+        <th>发布时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for blog in blogs %}
+       <tr>
+           <td>{{blog.id}}</td>
+           <td><a href="{{url_for('blog_detail',id=blog.id)}}">{{blog.title}}</a> </td>
+           <td>{{blog.author.username if blog.author else '未知作者'}}</td>
+           <td>{{blog.category.category_name if blog.category else '未知分类'}}</td>
+           <td>{{blog.create_time.strftime('%y-%m-%d %h:%m')}}</td>
+           <td>
+               <a href="{{url_for('blog_edit' , id=blog.id)}}">编辑</a>
+               <form action="{{url_for('blog_delete',id=blog.id)}}" method="post" style="display:inline;">
+                   <button type="submit" onclick="return confirm('确定删除吗')">删除</button>
+               </form>
+           </td>
+       </tr>
+    {% else %}
+    <tr><td colspan="6">暂无文章</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
