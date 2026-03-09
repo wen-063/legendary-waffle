@@ -10,7 +10,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 
 app  =  Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:159357@localhost/试'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Wen1593570@@localhost/试'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 db=SQLAlchemy(app)
