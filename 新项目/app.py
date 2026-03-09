@@ -10,7 +10,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 
 app  =  Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:06315@localhost/试'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:159357@localhost/试'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 db=SQLAlchemy(app)
@@ -42,8 +42,8 @@ class Blog(db.Model):
     __tablename__ = 'blog'
     id  =  db.Column(db.Integer,primary_key = True, nullable = False, autoincrement = True, comment = '文章的唯一标识')
     title  =  db.Column(db.String(100), nullable = False, comment = '文章标题')
-    author_id = db.Column(db.Integer, nullable = False, comment = '编写文章的用户')
-    category_id = db.Column(db.Integer, nullable = False, comment = '文章id')
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id') ,nullable = False, comment = '编写文章的用户')
+    category_id = db.Column(db.Integer,  db.ForeignKey('category.id') ,nullable = False, comment = '文章id')
     content  =  db.Column(db.Text, nullable = False, comment = '文章内容')
     create_time  =  db.Column(db.DateTime, default = datetime.utcnow,nullable = False, comment = '创建时间')
     update_time  =  db.Column(db.DateTime, default = datetime.utcnow,onupdate = datetime.utcnow,nullable = False, comment = '修改时间')
@@ -105,7 +105,7 @@ def register():        #注册
         db.session.add(new_user)
         db.session.commit()
 
-        return redirect(url_for('Home'))
+        return redirect(url_for('home'))
 
 @app.route('/categories')
 def category_list():    #分类列表
@@ -188,9 +188,9 @@ def blog_add():
         db.session.commit()
         return redirect(url_for('blog_list'))
     categories = Category.query.all()
-    return render_template('blog_add.html',categoryies = categories)
+    return render_template('blog_add.html',categories = categories)
 
-@app.route('/blog/<int:id>' , methods = ['GET' , 'POST'])
+@app.route('/blog/<int:id>/edit' , methods = ['GET' , 'POST'])
 @login_required
 def blog_edit(id):
     blog = Blog.query.get_or_404(id)
@@ -212,13 +212,13 @@ def blog_edit(id):
 @app.route('/blog/delete/<int:id>' , methods = ['POST'])
 @login_required
 def blog_delete(id):
-    blog = Blog.query.form.get_or_404(id)
+    blog = Blog.query.get_or_404(id)
 
     if blog.author_id != current_user.id:
         return "你没有权限删除这篇文章" , 403
 
     db.session.delete(blog)
-    db.session.cmomit()
+    db.session.commit()
     return redirect(url_for('blog_list'))
 
 @app.route('/login',methods=['GET','POST'])
